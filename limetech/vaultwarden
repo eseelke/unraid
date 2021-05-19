@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Bitwarden</Name>
+  <Repository>vaultwarden/server:latest</Repository>
+  <Registry>https://hub.docker.com/r/bitwardenrs/server/</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://forums.unraid.net/topic/88086-support-vaultwarden-formerly-bitwarden_rs/</Support>
+  <Project>https://github.com/dani-garcia/vaultwarden/</Project>
+  <Overview>Vaultwarden (formerly bitwarden_rs) is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.&#xD;
+    [br][br]&#xD;
+    Basically full implementation of Bitwarden API is provided including: &#xD;
+    [br][br]&#xD;
+    -Basic single user functionality&#xD;
+    [br]&#xD;
+    -Organizations support&#xD;
+    [br]&#xD;
+    -Attachments&#xD;
+    [br]&#xD;
+    -Vault API support&#xD;
+    [br]&#xD;
+    -Serving the static files for Vault interface&#xD;
+    [br]&#xD;
+    -Website icons API&#xD;
+    [br]&#xD;
+    -Authenticator and U2F support&#xD;
+    [br]&#xD;
+    -YubiKey OTP&#xD;
+    [br][br]&#xD;
+    For more configuration see the wiki&#xD;
+    [br]&#xD;
+    https://github.com/dani-garcia/vaultwarden/wiki&#xD;
+  </Overview>
+  <Category>Tools:</Category>
+  <WebUI>http://[IP]:[PORT:80]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/selfhosters/unRAID-CA-templates/master/templates/vaultwarden.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/selfhosters/unRAID-CA-templates/master/templates/img/bitwardenrs.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled>1621397721</DateInstalled>
+  <DonateText/>
+  <DonateLink/>
+  <Description>Vaultwarden (formerly bitwarden_rs) is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.&#xD;
+    [br][br]&#xD;
+    Basically full implementation of Bitwarden API is provided including: &#xD;
+    [br][br]&#xD;
+    -Basic single user functionality&#xD;
+    [br]&#xD;
+    -Organizations support&#xD;
+    [br]&#xD;
+    -Attachments&#xD;
+    [br]&#xD;
+    -Vault API support&#xD;
+    [br]&#xD;
+    -Serving the static files for Vault interface&#xD;
+    [br]&#xD;
+    -Website icons API&#xD;
+    [br]&#xD;
+    -Authenticator and U2F support&#xD;
+    [br]&#xD;
+    -YubiKey OTP&#xD;
+    [br][br]&#xD;
+    For more configuration see the wiki&#xD;
+    [br]&#xD;
+    https://github.com/dani-garcia/vaultwarden/wiki&#xD;
+  </Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>7277</HostPort>
+        <ContainerPort>80</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/bitwarden</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable>
+      <Value>eddie@seelke.net</Value>
+      <Name>SERVER_ADMIN_EMAIL</Name>
+      <Mode>{3}</Mode>
+    </Variable>
+    <Variable>
+      <Value>false</Value>
+      <Name>SIGNUPS_ALLOWED</Name>
+      <Mode>{3}</Mode>
+    </Variable>
+    <Variable>
+      <Value>true</Value>
+      <Name>INVITATIONS_ALLOWED</Name>
+      <Mode>{3}</Mode>
+    </Variable>
+    <Variable>
+      <Value>true</Value>
+      <Name>WEBSOCKET_ENABLED</Name>
+      <Mode>{3}</Mode>
+    </Variable>
+    <Variable>
+      <Value>2qeFlJhzQay10ylYou1NUieaiefN+T4eZo2XFur9wvPZmHajmDE1LomyewmudJHR</Value>
+      <Name>ADMIN_TOKEN</Name>
+      <Mode>{3}</Mode>
+    </Variable>
+  </Environment>
+  <Labels>
+    <Label>
+      <Value>web</Value>
+      <Name>traefik.http.routers.bitwarden.entrypoints</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>true</Value>
+      <Name>traefik.enable</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>Host(`vault.seelke.net`)</Value>
+      <Name>traefik.http.routers.bitwarden.rule</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>Bitwarden</Value>
+      <Name>traefik.http.routers.bitwarden.service</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>bitwarden-https</Value>
+      <Name>traefik.http.routers.bitwarden.middlewares</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>https</Value>
+      <Name>traefik.http.middlewares.bitwarden-https.redirectscheme.scheme</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>websecure</Value>
+      <Name>traefik.http.routers.bitwarden-secure.entrypoints</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>Host(`vault.seelke.net`)</Value>
+      <Name>traefik.http.routers.bitwarden-secure.rule</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>true</Value>
+      <Name>traefik.http.routers.bitwarden-secure.tls</Name>
+      <Mode/>
+    </Label>
+    <Label>
+      <Value>letsEncrypt</Value>
+      <Name>traefik.http.routers.bitwarden-secure.tls.certresolver</Name>
+      <Mode/>
+    </Label>
+  </Labels>
+  <Config Name="WebUI HTTP Port" Target="80" Default="" Mode="tcp" Description="Container Port: 80" Type="Port" Display="always" Required="true" Mask="false">7277</Config>
+  <Config Name="SERVER_ADMIN_EMAIL" Target="SERVER_ADMIN_EMAIL" Default="me@domain.com" Mode="{3}" Description="Container Variable: Server Admin E-Mail" Type="Variable" Display="always" Required="true" Mask="false">eddie@seelke.net</Config>
+  <Config Name="SIGNUPS_ALLOWED" Target="SIGNUPS_ALLOWED" Default="true|false" Mode="{3}" Description="Container Variable: Signups" Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="INVITATIONS_ALLOWED" Target="INVITATIONS_ALLOWED" Default="true|false" Mode="{3}" Description="Container Variable: Invitations" Type="Variable" Display="always" Required="false" Mask="false">true</Config>
+  <Config Name="WEBSOCKET_ENABLED" Target="WEBSOCKET_ENABLED" Default="false" Mode="{3}" Description="Container Variable: Websockets Enabled" Type="Variable" Display="always" Required="false" Mask="false">true</Config>
+  <Config Name="ADMIN_TOKEN" Target="ADMIN_TOKEN" Default="" Mode="{3}" Description="Container Variable: ADMIN_TOKEN" Type="Variable" Display="always" Required="true" Mask="true">2qeFlJhzQay10ylYou1NUieaiefN+T4eZo2XFur9wvPZmHajmDE1LomyewmudJHR</Config>
+  <Config Name="traefik.http.routers.bitwarden.entrypoints" Target="traefik.http.routers.bitwarden.entrypoints" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden.entrypoints" Type="Label" Display="always" Required="false" Mask="false">web</Config>
+  <Config Name="traefik.enable" Target="traefik.enable" Default="" Mode="" Description="Container Label: traefik.enable" Type="Label" Display="advanced-hide" Required="true" Mask="false">true</Config>
+  <Config Name="traefik.http.routers.bitwarden.rule" Target="traefik.http.routers.bitwarden.rule" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden.rule" Type="Label" Display="advanced-hide" Required="true" Mask="false">Host(`vault.seelke.net`)</Config>
+  <Config Name="traefik.http.routers.bitwarden.service" Target="traefik.http.routers.bitwarden.service" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden.service" Type="Label" Display="advanced-hide" Required="true" Mask="false">Bitwarden</Config>
+  <Config Name="traefik.http.routers.bitwarden.middlewares" Target="traefik.http.routers.bitwarden.middlewares" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden.middlewares" Type="Label" Display="advanced-hide" Required="true" Mask="false">bitwarden-https</Config>
+  <Config Name="traefik.http.middlewares.bitwarden-https.redirectscheme.scheme" Target="traefik.http.middlewares.bitwarden-https.redirectscheme.scheme" Default="" Mode="" Description="Container Label: traefik.http.middlewares.bitwarden-https.redirectscheme.scheme" Type="Label" Display="advanced-hide" Required="true" Mask="false">https</Config>
+  <Config Name="traefik.http.routers.bitwarden-secure.entrypoints" Target="traefik.http.routers.bitwarden-secure.entrypoints" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden-secure.entrypoints" Type="Label" Display="advanced-hide" Required="true" Mask="false">websecure</Config>
+  <Config Name="traefik.http.routers.bitwarden-secure.rule" Target="traefik.http.routers.bitwarden-secure.rule" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden-secure.rule" Type="Label" Display="advanced-hide" Required="true" Mask="false">Host(`vault.seelke.net`)</Config>
+  <Config Name="traefik.http.routers.bitwarden-secure.tls" Target="traefik.http.routers.bitwarden-secure.tls" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden-secure.tls" Type="Label" Display="advanced-hide" Required="true" Mask="false">true</Config>
+  <Config Name="traefik.http.routers.bitwarden-secure.tls.certresolver" Target="traefik.http.routers.bitwarden-secure.tls.certresolver" Default="" Mode="" Description="Container Label: traefik.http.routers.bitwarden-secure.tls.certresolver" Type="Label" Display="advanced-hide" Required="true" Mask="false">letsEncrypt</Config>
+  <Config Name="Storage" Target="/data" Default="/mnt/user/appdata/bitwarden" Mode="rw" Description="Container Path: /data" Type="Path" Display="advanced" Required="true" Mask="false">/mnt/user/appdata/bitwarden</Config>
+</Container>
